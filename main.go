@@ -25,35 +25,36 @@ func printMaze() {
 	println("---------------------")
 }
 
-func move(row, column *int) int {
+func move(row, column int) int {
 
-	if maze[*row+1][*column] != "*" { // Down
-		maze[*row][*column] = "V"
-		maze[*row+1][*column] = "S"
-		*row += 1
-	} else if maze[*row-1][*column] != "*" { //	Up
-		maze[*row][*column] = "V"
-		maze[*row-1][*column] = "S"
-		*row -= 1
-	} else if maze[*row][*column+1] != "*" { // Right
-		maze[*row][*column] = "V"
-		maze[*row][*column+1] = "S"
-		*column += 1
-	} else if maze[*row][*column-1] != "*" { // Left
-		maze[*row][*column] = "V"
-		maze[*row][*column-1] = "S"
-		*column -= 1
+	if maze[row+1][column] == " " { // Down
+		maze[row][column] = "V"
+		maze[row+1][column] = "S"
+		move(row+1, column)
+	} else if maze[row-1][column] == " " { //	Up
+		maze[row][column] = "V"
+		maze[row-1][column] = "S"
+		move(row-1, column)
+	} else if maze[row][column+1] == " " { // Right
+		maze[row][column] = "V"
+		maze[row][column+1] = "S"
+		move(row, column+1)
+	} else if maze[row][column-1] == " " { // Left
+		maze[row][column] = "V"
+		maze[row][column-1] = "S"
+		move(row, column-1)
+	} else if maze[row][column] == "F" {
+		fmt.Println("Finish")
 	} else {
 		return 1
 	}
 
 	printMaze()
-	// return 1
 	return move(row, column)
 }
 
 func main() {
 	printMaze()
-	move(&row, &column)
+	move(row, column)
 	return
 }
